@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using _2020_01_Puzzle.Def;
 
 /// <summary>
 /// プロジェクト名がnamespaceとなります
@@ -28,6 +29,8 @@ namespace _2020_01_Puzzle
             graphicsDeviceManager = new GraphicsDeviceManager(this);
             //コンテンツデータ（リソースデータ）のルートフォルダは"Contentに設定
             Content.RootDirectory = "Content";
+            graphicsDeviceManager.PreferredBackBufferWidth = Screen.Width;
+            graphicsDeviceManager.PreferredBackBufferHeight = Screen.Height;
         }
 
         /// <summary>
