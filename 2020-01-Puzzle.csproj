@@ -41,6 +41,12 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Actor\Block.cs" />
+    <Compile Include="Actor\Chain.cs" />
+    <Compile Include="Actor\ChainFall.cs" />
+    <Compile Include="Actor\ChainStart.cs" />
+    <Compile Include="Actor\MoveBlock.cs" />
+    <Compile Include="Actor\StopBlock.cs" />
     <Compile Include="Def\Screen.cs" />
     <Compile Include="Device\Renderer.cs" />
     <Compile Include="Game1.cs" />
@@ -64,7 +70,6 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Actor\" />
     <Folder Include="Scene\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using _2020_01_Puzzle.Def;
+using _2020_01_Puzzle.Device;
+using _2020_01_Puzzle.Actor;
 
 /// <summary>
 /// プロジェクト名がnamespaceとなります
@@ -18,7 +20,9 @@ namespace _2020_01_Puzzle
         // フィールド（このクラスの情報を記述）
         private GraphicsDeviceManager graphicsDeviceManager;//グラフィックスデバイスを管理するオブジェクト
         private SpriteBatch spriteBatch;//画像をスクリーン上に描画するためのオブジェクト
-
+        private Renderer renderer;
+        private MoveBlock moveBlock;
+        private StopBlock stopBlock;
         /// <summary>
         /// コンストラクタ
         /// （new で実体生成された際、一番最初に一回呼び出される）
@@ -31,6 +35,8 @@ namespace _2020_01_Puzzle
             Content.RootDirectory = "Content";
             graphicsDeviceManager.PreferredBackBufferWidth = Screen.Width;
             graphicsDeviceManager.PreferredBackBufferHeight = Screen.Height;
+            stopBlock = new StopBlock();
+            moveBlock = new MoveBlock(stopBlock);
         }
 
         /// <summary>
@@ -39,9 +45,9 @@ namespace _2020_01_Puzzle
         protected override void Initialize()
         {
             // この下にロジックを記述
-
-
-
+            renderer = new Renderer(Content, GraphicsDevice);   // レンダラー
+            moveBlock.Initialize();
+            stopBlock.Initialize();
             // この上にロジックを記述
             base.Initialize();// 親クラスの初期化処理呼び出し。絶対に消すな！！
         }
@@ -56,7 +62,7 @@ namespace _2020_01_Puzzle
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // この下にロジックを記述
-
+            renderer.LoadTexture("block");
 
             // この上にロジックを記述
         }
@@ -88,7 +94,8 @@ namespace _2020_01_Puzzle
             }
 
             // この下に更新ロジックを記述
-
+            moveBlock.Update();
+            stopBlock.Update();
             // この上にロジックを記述
             base.Update(gameTime); // 親クラスの更新処理呼び出し。絶対に消すな！！
         }
@@ -103,7 +110,10 @@ namespace _2020_01_Puzzle
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // この下に描画ロジックを記述
-
+            renderer.Begin();
+            stopBlock.Draw(renderer);
+            moveBlock.Draw(renderer);
+            renderer.End();
 
             //この上にロジックを記述
             base.Draw(gameTime); // 親クラスの更新処理呼び出し。絶対に消すな！！
