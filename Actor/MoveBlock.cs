@@ -35,7 +35,7 @@ namespace _2020_01_Puzzle.Actor
             isPressRightKey = false;
             isPressLeftKey = false;
             aliveFlag = false;
-            fallspeed=0;
+            fallspeed=2;
             timer = 0;
         }
         public void Update()
@@ -79,7 +79,6 @@ namespace _2020_01_Puzzle.Actor
                 position.Y += fallspeed;
                 //position2.Y += fallspeed;
             }
-            fallspeed += 0.005f;
         }
         private void MoveRightLeft()
         {
@@ -96,7 +95,6 @@ namespace _2020_01_Puzzle.Actor
                     if (stopBlock.GetBlockColor(tablePosition + new Vector2(1, 0)) == 0 &&
                         stopBlock.GetBlockColor(tablePosition + new Vector2(1, 1)) == 0)
                     {
-                        ChangeBlock(tablePosition, tablePosition + new Vector2(-1, 0));
                         position.X = position.X + Block.Size;   // ブロックのサイズだけ右へ移動
                         //position2.X += Block.Size;
                         isPressRightKey = true;// 「押した」に設定
@@ -120,7 +118,6 @@ namespace _2020_01_Puzzle.Actor
                     if (stopBlock.GetBlockColor(tablePosition + new Vector2(-1, 0)) == 0 &&
                         stopBlock.GetBlockColor(tablePosition + new Vector2(-1, 1)) == 0)
                     {
-                        ChangeBlock(tablePosition, tablePosition + new Vector2(-1, 0));
                         position.X = position.X - Block.Size;       // ブロックのサイズだけ左へ移動
                         //position2.X -= Block.Size;
                         isPressLeftKey = true;// 「押した」に設定
@@ -164,25 +161,6 @@ namespace _2020_01_Puzzle.Actor
             //対応する配列の位置が算出できる
             tablePosition = position / Block.Size;
             //tablePosition = position2 / Block.Size;
-        }
-        private void ChangeBlock(Vector2 position1,Vector2 position2)
-        {
-            if(position2.X < 0 || position2.X >= Block.XMax ||
-                position2.Y < 0 || position2.Y >= Block.YMax)
-            {
-                return;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                int color1 = stopBlock.GetBlockColor(position1);
-                int color2 = stopBlock.GetBlockColor(position2);
-
-                if (color1 != 0 && color2 != 0)
-                {
-                    stopBlock.SetBlock(position1, color1);
-                    //stopBlock.SetBlock(position2, color1);
-                }
-            }
         }
     }
 }

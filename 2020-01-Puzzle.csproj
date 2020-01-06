@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Actor\Block.cs" />
     <Compile Include="Actor\Chain.cs" />
+    <Compile Include="Actor\ChainEffect.cs" />
     <Compile Include="Actor\ChainFall.cs" />
     <Compile Include="Actor\ChainStart.cs" />
     <Compile Include="Actor\MoveBlock.cs" />
