@@ -12,6 +12,7 @@ namespace _2020_01_Puzzle.Actor
     class MoveBlock
     {
         Vector2 position;
+        Vector2 position2;
         private bool isPressRightKey;
         private bool isPressLeftKey;
         bool aliveFlag;
@@ -25,6 +26,7 @@ namespace _2020_01_Puzzle.Actor
         {
             this.stopBlock = stopBlock;
             position = new Vector2(0, 0);
+            position2 = new Vector2(0, 0);
             rand = new Random();
             tablePosition = new Vector2();
         }
@@ -33,7 +35,7 @@ namespace _2020_01_Puzzle.Actor
             isPressRightKey = false;
             isPressLeftKey = false;
             aliveFlag = false;
-            fallspeed = 1;
+            fallspeed=0;
             timer = 0;
         }
         public void Update()
@@ -54,6 +56,7 @@ namespace _2020_01_Puzzle.Actor
                     }
                 }
             }
+            MoveRightLeft();
         }
         public void Draw(Renderer renderer)
         {
@@ -61,20 +64,22 @@ namespace _2020_01_Puzzle.Actor
             {
                 Rectangle rect = new Rectangle(Block.Size * (color - 1), 0, Block.Size, Block.Size);
                 renderer.DrawTexture("block", position + new Vector2(Block.StartX, Block.StartY), rect);
-                renderer.DrawTexture("block", position + new Vector2(Block.StartX + Block.Size, Block.StartY), rect);
+                //renderer.DrawTexture("block", position2 + new Vector2(Block.StartX, Block.StartY), rect);
             }
         }
         private void MoveDown()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 position.Y += fallspeed;
+                //position2.Y += fallspeed;
             }
             else
             {
                 position.Y += fallspeed;
+                //position2.Y += fallspeed;
             }
-            //fallspeed += 0.005f;
+            fallspeed += 0.005f;
         }
         private void MoveRightLeft()
         {
@@ -88,11 +93,12 @@ namespace _2020_01_Puzzle.Actor
                 if (isPressRightKey == false)
                 {
                     //右側が空いてあれば
-                    if (stopBlock.GetBlockColor(tablePosition + new Vector2(2, 0)) == 0 &&
-                        stopBlock.GetBlockColor(tablePosition + new Vector2(2, 1)) == 0)
+                    if (stopBlock.GetBlockColor(tablePosition + new Vector2(1, 0)) == 0 &&
+                        stopBlock.GetBlockColor(tablePosition + new Vector2(1, 1)) == 0)
                     {
-
-                        position.X += Block.Size;   // ブロックのサイズだけ右へ移動
+                        ChangeBlock(tablePosition, tablePosition + new Vector2(-1, 0));
+                        position.X = position.X + Block.Size;   // ブロックのサイズだけ右へ移動
+                        //position2.X += Block.Size;
                         isPressRightKey = true;// 「押した」に設定
                     }
                 }
@@ -111,11 +117,12 @@ namespace _2020_01_Puzzle.Actor
                 if (isPressLeftKey == false)
                 {
                     // 左側が空いてあれば
-                    if (stopBlock.GetBlockColor(tablePosition + new Vector2(-2, 0)) == 0 &&
-                        stopBlock.GetBlockColor(tablePosition + new Vector2(-2, 1)) == 0)
+                    if (stopBlock.GetBlockColor(tablePosition + new Vector2(-1, 0)) == 0 &&
+                        stopBlock.GetBlockColor(tablePosition + new Vector2(-1, 1)) == 0)
                     {
-
-                        position.X -= Block.Size;       // ブロックのサイズだけ左へ移動
+                        ChangeBlock(tablePosition, tablePosition + new Vector2(-1, 0));
+                        position.X = position.X - Block.Size;       // ブロックのサイズだけ左へ移動
+                        //position2.X -= Block.Size;
                         isPressLeftKey = true;// 「押した」に設定
                     }
                 }
@@ -130,7 +137,7 @@ namespace _2020_01_Puzzle.Actor
             //対応する停止ブロック上の位置を計算
             SetTablePosition();
             // 画面の下に到着
-            if (position.Y >= Block.Size * (Block.YMax - 1) || stopBlock.GetBlockColor(tablePosition + new Vector2(0, 1)) != 0)
+            if (position.Y >= Block.Size * (Block.YMax - 1)||position2.Y>=Block.Size*(Block.YMax-1)|| stopBlock.GetBlockColor(tablePosition + new Vector2(0, 1)) != 0)
             {
                 // 存在しない
                 aliveFlag = false;
@@ -145,6 +152,7 @@ namespace _2020_01_Puzzle.Actor
 
             // 座標の設定
             position.X = rand.Next(Block.XMax) * Block.Size;
+            //position2.X = position.X + Block.Size;
             position.Y = 0;
 
             //色設定
@@ -155,6 +163,26 @@ namespace _2020_01_Puzzle.Actor
             //表示座標をブロックサイズで割れば
             //対応する配列の位置が算出できる
             tablePosition = position / Block.Size;
+            //tablePosition = position2 / Block.Size;
+        }
+        private void ChangeBlock(Vector2 position1,Vector2 position2)
+        {
+            if(position2.X < 0 || position2.X >= Block.XMax ||
+                position2.Y < 0 || position2.Y >= Block.YMax)
+            {
+                return;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                int color1 = stopBlock.GetBlockColor(position1);
+                int color2 = stopBlock.GetBlockColor(position2);
+
+                if (color1 != 0 && color2 != 0)
+                {
+                    stopBlock.SetBlock(position1, color1);
+                    //stopBlock.SetBlock(position2, color1);
+                }
+            }
         }
     }
 }

@@ -100,13 +100,13 @@ namespace _2020_01_Puzzle.Actor
                     }
                 }
             }
-            if (total >= 3)
+            if (total >= 4)
             {
                 for(int i = 0; i < total; i++)
                 {
                     effectXTable[y, x + i] = true;
                 }
-                gamePoint += numberPoint[total] * chainNumber;
+                //gamePoint += numberPoint[total] * chainNumber;
             }
         }
         private void LineCheakY(int x, int y)
@@ -139,14 +139,14 @@ namespace _2020_01_Puzzle.Actor
                     }
                 }
             }
-            if (total >= 3)
+            if (total >= 4)
             {
                 for (int i = 0; i < total; i++)
                 {
                     effectYTable[y + i, x] = true;//エフェクトYを登録
                 }
                 //スコア加算
-                gamePoint += numberPoint[total] * chainNumber;
+                //gamePoint += numberPoint[total] * chainNumber;
             }
         }
         private void LineCheakXY(int x, int y)
@@ -186,7 +186,7 @@ namespace _2020_01_Puzzle.Actor
                     effectYTable[y + i, x + i] = true;//エフェクトYを登録
                 }
                 //スコア加算
-                gamePoint += numberPoint[total] * chainNumber;
+                //gamePoint += numberPoint[total] * chainNumber;
             }
         }
     }

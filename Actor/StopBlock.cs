@@ -33,7 +33,7 @@ namespace _2020_01_Puzzle.Actor
         public void Initialize()
         {
             chainMode = Chain.Normal;
-            gamePoint = 0;
+            gamePoint = 10;
             stackY = 99;
             // ブロック配列のクリア
             // （縦横で２重ループ）
@@ -69,7 +69,7 @@ namespace _2020_01_Puzzle.Actor
             if (gamePoint > 0)
             {
                 chainMode = Chain.Fall;
-                chainFall.Update();
+                //chainFall.Update();
             }
             //score.add(gamePoint);
         }
@@ -87,9 +87,9 @@ namespace _2020_01_Puzzle.Actor
                     if (colorTable[y, x] != 0)
                     {
                         Vector2 position = new Vector2(Block.Size * x, Block.Size * y);
-                        Vector2 position2 = new Vector2(Block.Size * x, Block.Size * y);
+                        //Vector2 position2 = new Vector2(Block.Size * x, Block.Size * y);
                         position += new Vector2(Block.StartX, Block.StartY);
-                        position2 += new Vector2(Block.StartX + Block.Size, Block.StartY);
+                        //position2 += new Vector2(Block.StartX + Block.Size, Block.StartY);
                         Rectangle rect = new Rectangle(Block.Size * (colorTable[y, x] - 1), 0, Block.Size, Block.Size);
                         if (effectXTable[y, x] == true || effectYTable[y, x] == true||effectXYTable[y,x])
                         {
@@ -98,7 +98,7 @@ namespace _2020_01_Puzzle.Actor
                         else
                         {
                             renderer.DrawTexture("block", position, rect);
-                            renderer.DrawTexture("block", position2, rect);
+                            //renderer.DrawTexture("block", position2, rect);
                         }
                     }
                 }

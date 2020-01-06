@@ -10,7 +10,7 @@ namespace _2020_01_Puzzle.Actor
     {
         public const int Size = 50;//ブロックのサイズ
         public const int XMax = 6;//横幅
-        public const int YMax = 4;//縦幅
+        public const int YMax = 10;//縦幅
         public const int StartX = 20;//左上のX
         public const int StartY = 20;//左上のY
     }

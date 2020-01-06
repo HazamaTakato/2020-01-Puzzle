@@ -22,7 +22,7 @@ namespace _2020_01_Puzzle.Actor
                 for(int x = 0; x < Block.XMax; x++)
                 {
                     // 下が空いていれば
-                    if (colorTable[y + 1, x] == 0)
+                    if (colorTable[y + 4, x] == 0)
                     {
                         // 下に位置にコピーして、今の場所に空白を入れることで、
                         // ブロックが下に移動

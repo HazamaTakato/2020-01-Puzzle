@@ -111,8 +111,8 @@ namespace _2020_01_Puzzle
 
             // この下に描画ロジックを記述
             renderer.Begin();
-            stopBlock.Draw(renderer);
             moveBlock.Draw(renderer);
+            stopBlock.Draw(renderer);
             renderer.End();
 
             //この上にロジックを記述
