@@ -80,6 +80,7 @@ namespace _2020_01_Puzzle.Actor
                         if(point >= 4)
                         {
                             Delete(y, x);
+                            gamePoint += numberPoint[point] * chainNumber;
                         }
                     }
                 }
