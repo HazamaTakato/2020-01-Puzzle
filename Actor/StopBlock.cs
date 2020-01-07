@@ -75,11 +75,11 @@ namespace _2020_01_Puzzle.Actor
                 {
                     ChainStartCheck();
                 }
-                else if (chainMode == Chain.Effect)
-                {
-                    ChainEffectCheak();
-                }
-                else if (chainMode == Chain.Fall)
+            else if (chainMode == Chain.Effect)
+            {
+                ChainEffectCheak();
+            }
+            else if (chainMode == Chain.Fall)
                 {
                     ChainFallCheck();
                 }

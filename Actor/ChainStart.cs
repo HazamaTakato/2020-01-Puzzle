@@ -14,6 +14,15 @@ namespace _2020_01_Puzzle.Actor
         private bool[,] effectXYTable;
         int gamePoint;
         int[] numberPoint = new int[] { 0, 0, 0, 10, 30, 100, 300, 400, 400, 400 };//揃った数対応点
+        int[][] num = new int[][]
+        {
+           new int[]{-1,0 },
+           new int[]{0,1 },
+           new int[]{1,0 },
+           new int[]{0,-1 },
+        };
+        
+        int point;
         int chainNumber;// 連鎖数
         public ChainStart(int[,] colorTable, bool[,] effectXTable, bool[,] effectYTable, bool[,] effectXYTable)
         {
@@ -31,6 +40,32 @@ namespace _2020_01_Puzzle.Actor
             gamePoint = 0;
             // 横に揃ったかのチェック
             // （縦横で２重ループ）
+            //for (int y = 0; y < Block.YMax; y++)
+            //{
+            //    for (int x = 0; x < Block.XMax; x++)
+            //    {
+            //        // ブロックがあれば
+            //        if (colorTable[y, x] != 0)
+            //        {
+            //            // 横方向のチェック
+            //            LineCheakX(x, y);
+            //        }
+            //    }
+            //}
+            //// 縦に揃ったかのチェック
+            //// （縦横で２重ループ）
+            //for (int y = 0; y < Block.YMax; y++)
+            //{
+            //    for (int x = 0; x < Block.XMax; x++)
+            //    {
+            //        // ブロックがあれば
+            //        if (colorTable[y, x] != 0)
+            //        {
+            //            // 縦方向のチェック
+            //            LineCheakY(x, y);
+            //        }
+            //    }
+            //}
             for (int y = 0; y < Block.YMax; y++)
             {
                 for (int x = 0; x < Block.XMax; x++)
@@ -39,33 +74,13 @@ namespace _2020_01_Puzzle.Actor
                     if (colorTable[y, x] != 0)
                     {
                         // 横方向のチェック
-                        LineCheakX(x, y);
-                    }
-                }
-            }
-            // 縦に揃ったかのチェック
-            // （縦横で２重ループ）
-            for (int y = 0; y < Block.YMax; y++)
-            {
-                for (int x = 0; x < Block.XMax; x++)
-                {
-                    // ブロックがあれば
-                    if (colorTable[y, x] != 0)
-                    {
-                        // 縦方向のチェック
-                        LineCheakY(x, y);
-                    }
-                }
-            }
-            for (int y = 0; y < Block.YMax; y++)
-            {
-                for (int x = 0; x < Block.XMax; x++)
-                {
-                    // ブロックがあれば
-                    if (colorTable[y, x] != 0)
-                    {
-                        // 横方向のチェック
-                        LineCheakXY(x, y);
+                        //LineCheakXY(x, y);
+                        point = 0;
+                        DirectionXY(y, x);
+                        if(point >= 4)
+                        {
+                            Delete(y, x);
+                        }
                     }
                 }
             }
@@ -92,14 +107,15 @@ namespace _2020_01_Puzzle.Actor
             //同じ色が右方向にいくつあるかを調べる
             //同じ色は１個で初期化
             int total = 1;
+            int totalX = 1;
             //永久ループ
             while (true)
             {
                 //チェックする位置を計算
-                int x2 = x + total;
+                int x2 = x + totalX;
                 int y2 = y + total;
                 //範囲外なら
-                if (x2 >= Block.XMax || y2 >= Block.YMax)
+                if (x >= Block.XMax || y >= Block.YMax)
                 {
                     break;
                 }
@@ -107,23 +123,32 @@ namespace _2020_01_Puzzle.Actor
                 else
                 {
                     // 同じ色ならば
-                    if (colorTable[y, x] == colorTable[y2, x] || colorTable[y, x] == colorTable[y, x2])
+                    if (colorTable[y, x] == colorTable[y2, x])
                     {
                         total++;    // １を足す
+                    }
+                    else if (colorTable[y, x] == colorTable[y, x2])
+                    {
+                        totalX++;
                     }
                     else
                     {
                         break;
                     }
                 }
+
+
             }
             // 同じ色が３個以上あれば
-            if (total >= 4)
+            if (total + totalX - 1 >= 4)
             {
                 // 対応する位置を処理
                 for (int i = 0; i < total; i++)
                 {
-                    effectXYTable[y + i, x + i] = true;//エフェクトXを登録
+                    for (int j = 0; j < totalX; j++)
+                    {
+                        effectXYTable[y + i, x + j] = true;//エフェクトXを登録
+                    }
                 }
                 //スコア加算
                 gamePoint += numberPoint[total] * chainNumber;
@@ -216,6 +241,45 @@ namespace _2020_01_Puzzle.Actor
                 //スコア加算
                 gamePoint += numberPoint[total] * chainNumber;
             }
+        }
+        private void DirectionXY(int y, int x)
+        {
+            var hold = colorTable[y, x];
+            colorTable[y,x] = 0;
+            point++;
+
+            if (x + 1 < Block.XMax && colorTable[y, x + 1] == hold) DirectionXY(y, x + 1);
+            if (y + 1 < Block.YMax && colorTable[y + 1, x] == hold) DirectionXY(y + 1, x);
+            if (x - 1 >= 0 && colorTable[y, x - 1] == hold) DirectionXY(y, x - 1);
+            if (y - 1 >= 0 && colorTable[y - 1,x] == hold) DirectionXY(y - 1, x);
+
+            colorTable[y, x] = hold;
+
+            //for(int i = 0;i < num.Length; i++)
+            //{
+            //    int Y = y + num[i][0];
+            //    int X = x + num[i][1];
+            //    if (colorTable[Y, X] != 0 || X >= Block.XMax || Y >= Block.YMax)
+            //    {
+            //        continue;
+            //    }
+            //    else if (colorTable[y, x] == colorTable[Y, X])
+            //    {
+            //        point++;
+            //        DirectionXY(Y, X);
+            //    }
+            //}
+        }
+        private void Delete(int y,int x)
+        {
+            effectXYTable[y, x] = true;
+            int c = colorTable[y, x];
+            colorTable[y, x] = 0;
+
+            if (x + 1 < Block.XMax && colorTable[y, x + 1] == c) Delete(y, x + 1);
+            if (y + 1 < Block.YMax && colorTable[y + 1, x] == c) Delete(y + 1, x);
+            if (x - 1 >= 0 && colorTable[y, x - 1] ==c) Delete(y, x - 1);
+            if (y - 1 >= 0 && colorTable[y - 1, x] == c) Delete(y - 1, x);
         }
     }
 }
