@@ -16,6 +16,7 @@ namespace _2020_01_Puzzle.Actor
         private bool isPressRightKey;
         private bool isPressLeftKey;
         bool aliveFlag;
+        bool underFlag;
         Random rand;
         int color;
         StopBlock stopBlock;
@@ -35,13 +36,16 @@ namespace _2020_01_Puzzle.Actor
             isPressRightKey = false;
             isPressLeftKey = false;
             aliveFlag = false;
+            underFlag = false;
             fallspeed=2;
             timer = 0;
         }
         public void Update()
         {
-            if (aliveFlag == true)
+
+            if (aliveFlag)
             {
+                MoveRightLeft();
                 MoveDown();
                 AliveCheck();
             }
@@ -56,7 +60,6 @@ namespace _2020_01_Puzzle.Actor
                     }
                 }
             }
-            MoveRightLeft();
         }
         public void Draw(Renderer renderer)
         {
@@ -140,6 +143,9 @@ namespace _2020_01_Puzzle.Actor
                 aliveFlag = false;
                 //停止ブロックの発生
                 stopBlock.SetBlock(tablePosition, color);
+
+                underFlag = true;
+                stopBlock.UnderMoveBlock(tablePosition, color);
             }
         }
         private void SetBlock()

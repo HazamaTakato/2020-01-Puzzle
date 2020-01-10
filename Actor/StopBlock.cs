@@ -127,6 +127,12 @@ namespace _2020_01_Puzzle.Actor
                 //指定された配列の位置にデータを入れる
                 colorTable[(int)tablePosition.Y, (int)tablePosition.X] = color;
             }
+            public void UnderMoveBlock(Vector2 tablePosition,int color)
+            {
+            colorTable[9, (int)tablePosition.X] = color;
+            colorTable[9, (int)tablePosition.X] = 0;
+            chainMode = Chain.Fall;
+            }
             public int GetBlockColor(Vector2 tablePosition)
             {
                 //範囲外なら
