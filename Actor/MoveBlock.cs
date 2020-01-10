@@ -20,12 +20,14 @@ namespace _2020_01_Puzzle.Actor
         Random rand;
         int color;
         StopBlock stopBlock;
+        FutureBlock futureBlock;
         Vector2 tablePosition;
         float fallspeed;
         private int timer;
         public MoveBlock(StopBlock stopBlock)
         {
             this.stopBlock = stopBlock;
+            futureBlock = new FutureBlock();
             position = new Vector2(0, 0);
             position2 = new Vector2(0, 0);
             rand = new Random();
@@ -65,10 +67,11 @@ namespace _2020_01_Puzzle.Actor
         {
             if (aliveFlag == true)
             {
-                Rectangle rect = new Rectangle(Block.Size * (color - 1), 0, Block.Size, Block.Size);
+                Rectangle rect = new Rectangle(Block.Size * (color-1), 0, Block.Size, Block.Size);
                 renderer.DrawTexture("block", position + new Vector2(Block.StartX, Block.StartY), rect);
                 //renderer.DrawTexture("block", position2 + new Vector2(Block.StartX, Block.StartY), rect);
             }
+            futureBlock.Draw(renderer);
         }
         private void MoveDown()
         {
@@ -159,7 +162,8 @@ namespace _2020_01_Puzzle.Actor
             position.Y = 0;
 
             //色設定
-            color = rand.Next(5) + 1;
+            futureBlock.NextCreate();
+            color = futureBlock.Color()+1;
         }
         private void SetTablePosition()
         {
