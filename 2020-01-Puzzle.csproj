@@ -46,6 +46,7 @@
     <Compile Include="Actor\ChainEffect.cs" />
     <Compile Include="Actor\ChainFall.cs" />
     <Compile Include="Actor\ChainStart.cs" />
+    <Compile Include="Actor\FutureBlock.cs" />
     <Compile Include="Actor\MoveBlock.cs" />
     <Compile Include="Actor\StopBlock.cs" />
     <Compile Include="Def\Screen.cs" />
