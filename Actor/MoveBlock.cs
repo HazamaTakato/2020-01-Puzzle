@@ -140,15 +140,20 @@ namespace _2020_01_Puzzle.Actor
             //対応する停止ブロック上の位置を計算
             SetTablePosition();
             // 画面の下に到着
-            if (position.Y >= Block.Size * (Block.YMax - 1)||position2.Y>=Block.Size*(Block.YMax-1)|| stopBlock.GetBlockColor(tablePosition + new Vector2(0, 1)) != 0)
+            if (position.Y >= Block.Size * (Block.YMax - 1)||position2.Y>=Block.Size*(Block.YMax-1)|| stopBlock.GetBlockColor(tablePosition + new Vector2(0, 1)) != 0&&!underFlag)
             {
                 // 存在しない
                 aliveFlag = false;
                 //停止ブロックの発生
                 stopBlock.SetBlock(tablePosition, color);
-
                 underFlag = true;
                 stopBlock.UnderMoveBlock(tablePosition, color);
+                if (underFlag)
+                {
+                    //MoveRightLeft();
+                    //MoveDown();
+                    underFlag = false;
+                }
             }
         }
         private void SetBlock()

@@ -129,7 +129,7 @@ namespace _2020_01_Puzzle.Actor
             }
             public void UnderMoveBlock(Vector2 tablePosition,int color)
             {
-            colorTable[9, (int)tablePosition.X] = color;
+            colorTable[0, (int)tablePosition.X] = colorTable[9,(int)tablePosition.X];
             colorTable[9, (int)tablePosition.X] = 0;
             chainMode = Chain.Fall;
             }
