@@ -78,26 +78,25 @@ namespace _2020_01_Puzzle.Actor
                     {
                         Vector2 position = new Vector2(Block.Size * x, Block.Size * y);
                         position += new Vector2(Block.StartX, Block.StartY);
-                        Rectangle rect = new Rectangle(Block.Size * (colorTable[y, x] - 1), 0, Block.Size, Block.Size);
+                        Rectangle rect = new Rectangle(Block.Size * (colorTable[y, x]), 0, Block.Size, Block.Size);
 
-                        //for (int i = 0; i < number; i++)
-                        //{
-                        //    // 表示座標の補正を計算
-                        //    float effectMove = effectTimer * 150;
-                        //    effectMove += (i + 1) * effectTimer * 50;
+                        for (int i = 0; i < number; i++)
+                        {
+                            // 表示座標の補正を計算
+                            float effectMove=effectColor;
 
-                        //    renderer.DrawTexture("block", position + new Vector2(0, -effectMove),
-                        //            rect, effectColor);
-                        //    renderer.DrawTexture("block", position + new Vector2(0, effectMove),
-                        //           rect, effectColor);
-
+                            renderer.DrawTexture("effectBlock", position + new Vector2(0, -effectMove),
+                                    rect, effectColor);
+                            renderer.DrawTexture("effectBlock", position + new Vector2(0, effectMove),
+                                   rect, effectColor);
 
 
-                        //    renderer.DrawTexture("block", position + new Vector2(-effectMove, 0),
-                        //           rect, effectColor);
-                        //    renderer.DrawTexture("block", position + new Vector2(effectMove, 0),
-                        //           rect, effectColor);
-                        //}
+
+                            renderer.DrawTexture("effectBlock", position + new Vector2(-effectMove, 0),
+                                   rect, effectColor);
+                            renderer.DrawTexture("effectBlock", position + new Vector2(effectMove, 0),
+                                   rect, effectColor);
+                        }
                     }
                 }
             }
