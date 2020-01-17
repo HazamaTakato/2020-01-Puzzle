@@ -13,7 +13,7 @@ namespace _2020_01_Puzzle.Actor
         private bool[,] effectYTable;   // 縦が揃ったエフェクト
         private bool[,] effectXYTable;
         int gamePoint;
-        int[] numberPoint = new int[] { 0, 0, 0, 10, 30, 100, 300, 400, 400, 400 };//揃った数対応点
+        int[] numberPoint = new int[] { 0, 0, 0, 10, 30, 100, 300, 400, 400, 400,400,400,400,400,400,400,400,400,400 };//揃った数対応点
         int[][] num = new int[][]
         {
            new int[]{-1,0 },
@@ -256,20 +256,6 @@ namespace _2020_01_Puzzle.Actor
 
             colorTable[y, x] = hold;
 
-            //for(int i = 0;i < num.Length; i++)
-            //{
-            //    int Y = y + num[i][0];
-            //    int X = x + num[i][1];
-            //    if (colorTable[Y, X] != 0 || X >= Block.XMax || Y >= Block.YMax)
-            //    {
-            //        continue;
-            //    }
-            //    else if (colorTable[y, x] == colorTable[Y, X])
-            //    {
-            //        point++;
-            //        DirectionXY(Y, X);
-            //    }
-            //}
         }
         private void Delete(int y,int x)
         {

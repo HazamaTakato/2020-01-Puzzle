@@ -88,6 +88,7 @@ namespace _2020_01_Puzzle.Actor
             //連鎖開始、チェック
             public void ChainStartCheck()
             {
+                chainMode = Chain.Fall;
                 gamePoint = chainStart.Update();
                 if (gamePoint > 0)
                 {
@@ -129,7 +130,7 @@ namespace _2020_01_Puzzle.Actor
             }
             public void UnderMoveBlock(Vector2 tablePosition,int color)
             {
-            colorTable[9, (int)tablePosition.X] = color;
+               colorTable[9, (int)tablePosition.X] = color;
             colorTable[9, (int)tablePosition.X] = 0;
             chainMode = Chain.Fall;
             }
